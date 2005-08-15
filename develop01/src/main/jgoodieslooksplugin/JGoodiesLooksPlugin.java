@@ -33,13 +33,7 @@ public class JGoodiesLooksPlugin extends Plugin {
     }
 
     public Properties storeSettings() {
-        Properties settings = tab == null ? config : tab.getConfiguration();
-        Enumeration e = settings.keys();
-        while (e.hasMoreElements()) {
-            String key = (String) e.nextElement();
-            System.out.println("store " + key + "=" + settings.getProperty(key));
-        }
-        return settings;
+        return config.getProperties();
     }
     
 	public void loadSettings(Properties props) {

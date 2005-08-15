@@ -30,11 +30,12 @@
     </target>
 	
 	<target name="deploy" depends="jar">
-		<copy todir="C:/WithoutInstall/tvbrowser/plugins/" file="${jar.dir}/${ant.project.name}.jar"/>
+		<!-- TODO SKOPP: das muss ich noch parametrisieren -->
+		<copy todir="C:/Programme/TV-Browser/plugins" file="${jar.dir}/${ant.project.name}.jar"/>
 	</target>
 
 	<target name="test" depends="deploy">
-		<java fork="true" dir="C:/WithoutInstall/tvbrowser/" jar="tvbrowser.jar"></java>
+		<java fork="true" dir="C:/Programme/TV-Browser/" jar="tvbrowser.jar"></java>
 	</target>
 
 </project>

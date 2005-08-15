@@ -16,16 +16,28 @@ import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticTheme;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 
-class Configuration extends Properties {
+final class Configuration {
     
     private static final String LAF = "laf";
     private static final String THEME = "theme";
     private static final String ACTIVE = "active";
+    private Properties p;
     
     private LookAndFeel otherLaf;
 
-    Configuration(Properties p) {
-        super(p);
+    Configuration(Properties props) {
+        p = props;
+        /*
+         * initialize all default values.  This ensures all values are 
+         * always there and always stores and always load
+         */
+        setLaf(getLaf());
+        setTheme(getTheme());
+        setActive(isActive());
+    }
+    
+    Properties getProperties() {
+        return p;
     }
     
     void activateLaf() {
@@ -50,19 +62,19 @@ class Configuration extends Properties {
     }
     
     void setActive(boolean activ) {
-        setProperty(ACTIVE, "" + activ);
+        p.setProperty(ACTIVE, "" + activ);
     }
     
     boolean isActive() {
-        return Boolean.TRUE.toString().equals(getProperty(ACTIVE, "false"));
+        return Boolean.TRUE.toString().equals(p.getProperty(ACTIVE, "false"));
     }
 
     void setLaf(LookAndFeel laf) {
-        setProperty(LAF, laf.getClass().getName());
+        p.setProperty(LAF, laf.getClass().getName());
     }
     
     LookAndFeel getLaf() {
-        String clazz = getProperty(LAF, null); 
+        String clazz = p.getProperty(LAF, null); 
         if (clazz == null) {
             return new PlasticXPLookAndFeel();
         }
@@ -81,11 +93,11 @@ class Configuration extends Properties {
     }
 
     void setTheme(PlasticTheme theme) {
-        setProperty(THEME, theme.getClass().getName());
+        p.setProperty(THEME, theme.getClass().getName());
     }
 
     PlasticTheme getTheme() {
-        String clazz = getProperty(THEME, null); 
+        String clazz = p.getProperty(THEME, null); 
         if (clazz == null) {
             return PlasticLookAndFeel.getMyCurrentTheme();
         }

@@ -123,10 +123,6 @@ class ConfigureTab extends JPanel implements SettingsTab {
         return this;
     }
     
-    Configuration getConfiguration() {
-        return config;
-    }
-
 	public void saveSettings() {
 	    config.setActive(enabled.isSelected());
 	    config.setLaf((LookAndFeel) lafChoice.getSelectedItem());
