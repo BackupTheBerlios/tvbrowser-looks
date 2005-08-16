@@ -85,7 +85,7 @@ class ConfigureTab extends JPanel implements SettingsTab {
     public JPanel createSettingsPanel() {
         if (!initilized) {
             /*
-             * TV-Browser invokes (at least 1.1alpha3 did)
+             * TV-Browser invokes (at least "1.1alpha3" did)
              * this method multiple times.
              * Initializing components again would
              * reset selected values in UI components
