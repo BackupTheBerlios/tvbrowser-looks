@@ -12,6 +12,7 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.jgoodies.looks.LookUtils;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticTheme;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
@@ -42,11 +43,25 @@ final class Configuration {
     
     void activateLaf() {
 		if (isActive()) {
-	        otherLaf = UIManager.getLookAndFeel();
-			PlasticLookAndFeel.setMyCurrentTheme(getTheme());
+            if (otherLaf == null) {
+                otherLaf = UIManager.getLookAndFeel();
+            }
 			try {
-	            UIManager.setLookAndFeel(getLaf());
-	        } catch (UnsupportedLookAndFeelException e) {
+                LookUtils.setLookAndTheme(getLaf(), getTheme());
+                /*
+                 * inject the classloader of this plugin into the UIManager!
+                 * found at https://lists.xcf.berkeley.edu/lists/advanced-java/2001-January/015380.html 
+                 */
+                ClassLoader pluginLoader = getLaf().getClass().getClassLoader();
+                UIManager.getDefaults().put("ClassLoader", pluginLoader);
+                /*
+                 * alternative:
+                    (18:04:30) hampelratte: ok, hier mal die lösung von hand:
+                    (18:04:34) hampelratte: URLClassLoader url = (URLClassLoader)Configuration.class.getClassLoader();
+                    (18:05:00) hampelratte: URL[] urls = url.getURLs();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (int i = 0; i &lt; urls.length; i++) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(urls[i]);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }
+                    (18:05:24) hampelratte: damit kommt man an die datei des plugins ran. das könnte man dann mit java.util.jar auseinandernehmen und die ganzen klassen nacheinander laden
+                 */
+            } catch (UnsupportedLookAndFeelException e) {
 	            e.printStackTrace();
 	        }
         } else {
@@ -57,6 +72,7 @@ final class Configuration {
     	            e.printStackTrace();
                 }
             }
+            otherLaf = null;
         }
 
     }
