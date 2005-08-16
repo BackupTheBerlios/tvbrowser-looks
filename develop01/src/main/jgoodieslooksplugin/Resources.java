@@ -1,8 +1,6 @@
-/*
- * Created on 12.08.2005
+/* $Id: Resources.java,v 1.4 2005/08/16 20:38:48 emsker Exp $
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Copyright under GNU General Public License (GPL)
  */
 package jgoodieslooksplugin;
 
@@ -10,6 +8,12 @@ import util.ui.Localizer;
 import devplugin.PluginInfo;
 import devplugin.Version;
 
+/**
+ * Convenience class localizable strings.
+ *
+ * @author  Martin Skopp
+ * @version $Revision: 1.4 $
+ */
 class Resources {
 
     private static final Localizer mLocalizer = Localizer
@@ -17,7 +21,7 @@ class Resources {
 
     static final String TITLE = mLocalizer.msg("pluginTitle", "JGoodies Looks Look&Feel");
     static final String NAME = mLocalizer.msg("pluginName", "JGoodies Looks Look&Feel Configuration");
-    static final String DESC = mLocalizer.msg("description", "Configures and activates JGoodies Looks L&Fs\nDank an http://www.jgoodies.com/freeware/looks/");
+    static final String DESC = mLocalizer.msg("description", "Configures and activates JGoodies Looks L&Fs\nThanks to http://www.jgoodies.com/freeware/looks/");
     static final String AUTHOR = "Martin Skopp";
     static final String LICENSE = "GNU General Public License";
 

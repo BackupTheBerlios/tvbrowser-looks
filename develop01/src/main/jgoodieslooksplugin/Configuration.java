@@ -1,8 +1,6 @@
-/*
- * Created on 11.08.2005
+/* $Id: Configuration.java,v 1.4 2005/08/16 20:37:18 emsker Exp $
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Copyright under GNU General Public License (GPL)
  */
 package jgoodieslooksplugin;
 
@@ -17,6 +15,12 @@ import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticTheme;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 
+/**
+ * Convenience class for accessing and mutating plugins settins. 
+ *
+ * @author  Martin Skopp
+ * @version $Revision: 1.4 $
+ */
 final class Configuration {
     
     private static final String LAF = "laf";

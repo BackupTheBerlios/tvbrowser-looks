@@ -1,8 +1,6 @@
-/*
- * Created on 11.08.2005
+/* $Id: ConfigureTab.java,v 1.4 2005/08/16 20:37:18 emsker Exp $
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Copyright under GNU General Public License (GPL)
  */
 package jgoodieslooksplugin;
 
@@ -29,6 +27,12 @@ import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import devplugin.SettingsTab;
 
+/**
+ * GUI component to configure plugin.
+ *
+ * @author  Martin Skopp
+ * @version $Revision: 1.4 $
+ */
 class ConfigureTab extends JPanel implements SettingsTab {
 	
     private final Configuration config;

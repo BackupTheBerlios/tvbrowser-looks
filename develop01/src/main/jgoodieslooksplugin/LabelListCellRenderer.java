@@ -1,3 +1,7 @@
+/* $Id: LabelListCellRenderer.java,v 1.3 2005/08/16 20:37:18 emsker Exp $
+ *
+ * Copyright under GNU General Public License (GPL)
+ */
 package jgoodieslooksplugin;
 
 import java.awt.Component;
@@ -9,7 +13,13 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-abstract public class LabelListCellRenderer implements ListCellRenderer {
+/**
+ * General Renderer for Combobox entries.
+ *
+ * @author  Martin Skopp
+ * @version $Revision: 1.3 $
+ */
+abstract class LabelListCellRenderer implements ListCellRenderer {
     
     private final JPanel panel;
     private final JLabel label;
@@ -17,7 +27,7 @@ abstract public class LabelListCellRenderer implements ListCellRenderer {
     /*
      * SKOPP: Groesse und ausrichtung der Combobox muss man mal ueberarbeiten
      */
-    public LabelListCellRenderer() {
+    LabelListCellRenderer() {
         panel = new JPanel();
         panel.setOpaque(true);
         panel.setBorder(BorderFactory.createEmptyBorder());
