@@ -1,4 +1,4 @@
-/* $Id: Configuration.java,v 1.4 2005/08/16 20:37:18 emsker Exp $
+/* $Id: Configuration.java,v 1.5 2005/08/16 21:07:46 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -19,9 +19,14 @@ import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
  * Convenience class for accessing and mutating plugins settins. 
  *
  * @author  Martin Skopp
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 final class Configuration {
+    
+    /**
+     * Default value for activation of JGoodies L&F
+     */
+    private static final Boolean DEFAULT_ACTIVATION_STATE = Boolean.TRUE;
     
     private static final String LAF = "laf";
     private static final String THEME = "theme";
@@ -45,6 +50,10 @@ final class Configuration {
         return p;
     }
     
+    /**
+     * Activates JGoodies L&F if enabled or previously enabled L&F if JGoodies
+     * L&F is disabled in this configuration.
+     */
     void activateLaf() {
 		if (isActive()) {
             if (otherLaf == null) {
@@ -53,18 +62,21 @@ final class Configuration {
 			try {
                 LookUtils.setLookAndTheme(getLaf(), getTheme());
                 /*
-                 * inject the classloader of this plugin into the UIManager!
-                 * found at https://lists.xcf.berkeley.edu/lists/advanced-java/2001-January/015380.html 
+                 * Now inject the classloader of this plugin into the UIManager!
+                 * found at https://lists.xcf.berkeley.edu/lists/advanced-java/2001-January/015380.html
+                 *  
+                 * Alternative (copied from personal IM chat):
+                 * 
+                 *  hampelratte: ok, hier mal die lösung von hand:
+                 *  hampelratte: URLClassLoader url = (URLClassLoader)Configuration.class.getClassLoader();
+                 *  hampelratte: URL[] urls = url.getURLs();
+                 *               for (int i = 0; i &lt; urls.length; i++) {
+                 *                 System.out.println(urls[i]);
+                 *               }
+                 *  hampelratte: damit kommt man an die datei des plugins ran. das könnte man dann mit java.util.jar auseinandernehmen und die ganzen klassen nacheinander laden
                  */
                 ClassLoader pluginLoader = getLaf().getClass().getClassLoader();
                 UIManager.getDefaults().put("ClassLoader", pluginLoader);
-                /*
-                 * alternative:
-                    (18:04:30) hampelratte: ok, hier mal die lösung von hand:
-                    (18:04:34) hampelratte: URLClassLoader url = (URLClassLoader)Configuration.class.getClassLoader();
-                    (18:05:00) hampelratte: URL[] urls = url.getURLs();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (int i = 0; i &lt; urls.length; i++) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(urls[i]);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }
-                    (18:05:24) hampelratte: damit kommt man an die datei des plugins ran. das könnte man dann mit java.util.jar auseinandernehmen und die ganzen klassen nacheinander laden
-                 */
             } catch (UnsupportedLookAndFeelException e) {
 	            e.printStackTrace();
 	        }
@@ -86,7 +98,8 @@ final class Configuration {
     }
     
     boolean isActive() {
-        return Boolean.TRUE.toString().equals(p.getProperty(ACTIVE, "false"));
+        return Boolean.TRUE.toString().equals(
+                p.getProperty(ACTIVE, DEFAULT_ACTIVATION_STATE.toString()));
     }
 
     void setLaf(LookAndFeel laf) {
@@ -96,6 +109,7 @@ final class Configuration {
     LookAndFeel getLaf() {
         String clazz = p.getProperty(LAF, null); 
         if (clazz == null) {
+            // the overall default
             return new PlasticXPLookAndFeel();
         }
         try {
@@ -119,6 +133,7 @@ final class Configuration {
     PlasticTheme getTheme() {
         String clazz = p.getProperty(THEME, null); 
         if (clazz == null) {
+            // the overall default
             return PlasticLookAndFeel.getMyCurrentTheme();
         }
         try {
