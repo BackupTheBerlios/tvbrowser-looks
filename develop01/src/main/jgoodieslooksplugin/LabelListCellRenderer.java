@@ -14,6 +14,9 @@ abstract public class LabelListCellRenderer implements ListCellRenderer {
     private final JPanel panel;
     private final JLabel label;
     
+    /*
+     * SKOPP: Groesse und ausrichtung der Combobox muss man mal ueberarbeiten
+     */
     public LabelListCellRenderer() {
         panel = new JPanel();
         panel.setOpaque(true);
