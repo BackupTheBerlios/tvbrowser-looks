@@ -1,4 +1,4 @@
-/* $Id: JGoodiesLooksPlugin.java,v 1.4 2005/08/16 20:55:36 emsker Exp $
+/* $Id: JGoodiesLooksPlugin.java,v 1.5 2005/08/16 20:56:28 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -7,7 +7,6 @@ package jgoodieslooksplugin;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.URL;
 import java.util.Properties;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
@@ -21,7 +20,7 @@ import devplugin.SettingsTab;
  * The plugin itself.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class JGoodiesLooksPlugin extends Plugin {
 	
