@@ -1,40 +1,30 @@
-/* $Id: LabelListCellRenderer.java,v 1.3 2005/08/16 20:37:18 emsker Exp $
+/* $Id: LabelListCellRenderer.java,v 1.4 2005/08/16 20:56:11 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
 package jgoodieslooksplugin;
 
 import java.awt.Component;
-import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 /**
  * General Renderer for Combobox entries.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract class LabelListCellRenderer implements ListCellRenderer {
     
-    private final JPanel panel;
     private final JLabel label;
     
-    /*
-     * SKOPP: Groesse und ausrichtung der Combobox muss man mal ueberarbeiten
-     */
     LabelListCellRenderer() {
-        panel = new JPanel();
-        panel.setOpaque(true);
-        panel.setBorder(BorderFactory.createEmptyBorder());
-
         label = new JLabel();
-        panel.setLayout(new FlowLayout());
-        panel.add(label, FlowLayout.LEFT);
+        label.setOpaque(true);
+        label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     }
     
     abstract protected String getText(Object value); 
@@ -43,11 +33,9 @@ abstract class LabelListCellRenderer implements ListCellRenderer {
     public final Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
 
-        panel.setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-        panel.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
-        panel.setEnabled(list.isEnabled());
-        panel.setFont(list.getFont());
-
+        label.setEnabled(list.isEnabled());
+        label.setFont(list.getFont());
+        label.setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
         label.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
 
         String text = value == null ? "" : getText(value);
@@ -55,7 +43,7 @@ abstract class LabelListCellRenderer implements ListCellRenderer {
 
         String tip = value == null ? "" : getToolTipText(value);
         label.setToolTipText(tip == null ? "" : tip);
-        return panel;
+        return label;
     }
 
 }
