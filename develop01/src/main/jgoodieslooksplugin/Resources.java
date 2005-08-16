@@ -26,6 +26,6 @@ class Resources {
     static final String LABEL_THEME = mLocalizer.msg("labelTheme", "Theme:");
     static final String LABEL_NOTE = mLocalizer.msg("labelNote", "<html><b>ATTENTION:</b> Changing above settings will require<br>a restart of TV-Browser to apply changes.</html>");
 
-    static final PluginInfo PLUGIN_INFO = new PluginInfo(TITLE, DESC, AUTHOR, new Version(0, 2), LICENSE);
+    static final PluginInfo PLUGIN_INFO = new PluginInfo(TITLE, DESC, AUTHOR, new Version(0, 3), LICENSE);
 
 }
