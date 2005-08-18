@@ -1,4 +1,4 @@
-/* $Id: ConfigureTab.java,v 1.4 2005/08/16 20:37:18 emsker Exp $
+/* $Id: ConfigureTab.java,v 1.5 2005/08/18 06:03:57 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -31,13 +31,13 @@ import devplugin.SettingsTab;
  * GUI component to configure plugin.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 class ConfigureTab extends JPanel implements SettingsTab {
 	
     private final Configuration config;
     private JComboBox lafChoice, themeChoice;
-    private JCheckBox enabled;
+    private JCheckBox looksEnabled, dropShadow;
     private JLabel lafLabel, themeLabel, noteLabel;
     private boolean initilized = false;
 
@@ -54,11 +54,13 @@ class ConfigureTab extends JPanel implements SettingsTab {
 
         themes = PlasticLookAndFeel.getInstalledThemes().toArray();
 
-        enabled = new JCheckBox(Resources.LABEL_ENABLE);
-        enabled.setSelected(config.isActive());
+        looksEnabled = new JCheckBox(Resources.LABEL_ENABLE);
+        looksEnabled.setSelected(config.isActive());
 
         lafChoice = new JComboBox(lafs);
         lafChoice.setRenderer(new ComboBoxLafRenderer());
+        lafLabel = new JLabel(Resources.LABEL_LAF);
+        lafLabel.setLabelFor(lafChoice);
         String selectedLaf = config.getLaf().getName();
         for (int i = 0; i < lafs.length; i++) {
             if (lafs[i].getName().equals(selectedLaf)) {
@@ -69,6 +71,8 @@ class ConfigureTab extends JPanel implements SettingsTab {
 
         themeChoice = new JComboBox(themes);
         themeChoice.setRenderer(new ComboBoxThemeRenderer());
+        themeLabel = new JLabel(Resources.LABEL_THEME);
+        themeLabel.setLabelFor(themeChoice);
         String selectedTheme = config.getTheme().getName();
         for (int i = 0; i < themes.length; i++) {
             if (((MetalTheme)themes[i]).getName().equals(selectedTheme)) {
@@ -77,11 +81,9 @@ class ConfigureTab extends JPanel implements SettingsTab {
             }
         }
 
-        lafLabel = new JLabel(Resources.LABEL_LAF);
-        lafLabel.setLabelFor(lafChoice);
-
-        themeLabel = new JLabel(Resources.LABEL_THEME);
-        themeLabel.setLabelFor(themeChoice);
+        
+        dropShadow = new JCheckBox(Resources.LABEL_DROP_SHADOW);
+        dropShadow.setSelected(config.isPopupDropShadowEnabled());
         
         noteLabel = new JLabel(Resources.LABEL_NOTE);
     }
@@ -102,16 +104,19 @@ class ConfigureTab extends JPanel implements SettingsTab {
             choices.setLayout(new SpringLayout());
             
             choices.add(new JLabel());
-            choices.add(enabled);
+            choices.add(looksEnabled);
             
             choices.add(lafLabel);
             choices.add(lafChoice);
             
             choices.add(themeLabel);
             choices.add(themeChoice);
+            
+            choices.add(new JLabel());
+            choices.add(dropShadow);
     
             SpringUtilities.makeCompactGrid(choices,
-                                            3, 2,   //rows, cols
+                                            4, 2,   //rows, cols
                                             6, 6,   //initX, initY
                                             6, 6);  //xPad, yPad
             
@@ -128,9 +133,10 @@ class ConfigureTab extends JPanel implements SettingsTab {
     }
     
 	public void saveSettings() {
-	    config.setActive(enabled.isSelected());
+	    config.setActive(looksEnabled.isSelected());
 	    config.setLaf((LookAndFeel) lafChoice.getSelectedItem());
 	    config.setTheme((PlasticTheme) themeChoice.getSelectedItem());
+        config.setPopupDropShadow(dropShadow.isSelected());
 	}
 
 	public Icon getIcon() {

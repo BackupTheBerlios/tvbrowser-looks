@@ -1,4 +1,4 @@
-/* $Id: Configuration.java,v 1.5 2005/08/16 21:07:46 emsker Exp $
+/* $Id: Configuration.java,v 1.6 2005/08/18 06:03:57 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.jgoodies.looks.LookUtils;
+import com.jgoodies.looks.Options;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticTheme;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
@@ -19,7 +20,7 @@ import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
  * Convenience class for accessing and mutating plugins settins. 
  *
  * @author  Martin Skopp
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 final class Configuration {
     
@@ -31,6 +32,7 @@ final class Configuration {
     private static final String LAF = "laf";
     private static final String THEME = "theme";
     private static final String ACTIVE = "active";
+    private static final String POPUP_DROP_SHADOW = "popupDropShadow";
     private Properties p;
     
     private LookAndFeel otherLaf;
@@ -44,6 +46,7 @@ final class Configuration {
         setLaf(getLaf());
         setTheme(getTheme());
         setActive(isActive());
+        setPopupDropShadow(isPopupDropShadowEnabled());
     }
     
     Properties getProperties() {
@@ -60,6 +63,9 @@ final class Configuration {
                 otherLaf = UIManager.getLookAndFeel();
             }
 			try {
+                Options.setPopupDropShadowEnabled(isPopupDropShadowEnabled());
+                UIManager.put("jgoodies.popupDropShadowEnabled", Boolean.valueOf(isPopupDropShadowEnabled()));
+                
                 LookUtils.setLookAndTheme(getLaf(), getTheme());
                 /*
                  * Now inject the classloader of this plugin into the UIManager!
@@ -148,5 +154,14 @@ final class Configuration {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    boolean isPopupDropShadowEnabled() {
+        return Boolean.TRUE.toString().equals(
+            p.getProperty(POPUP_DROP_SHADOW, "" + Options.isPopupDropShadowEnabled()));
+    }
+    
+    void setPopupDropShadow(boolean activ) {
+        p.setProperty(POPUP_DROP_SHADOW, "" + activ);
     }
 }
