@@ -1,4 +1,4 @@
-/* $Id: Resources.java,v 1.5 2005/08/18 06:03:57 emsker Exp $
+/* $Id: Resources.java,v 1.6 2005/08/18 07:26:19 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -12,7 +12,7 @@ import devplugin.Version;
  * Convenience class localizable strings.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 class Resources {
 
@@ -31,6 +31,6 @@ class Resources {
     static final String LABEL_DROP_SHADOW = mLocalizer.msg("labelDropShadow", "Popup Menu Drop Shadow");
     static final String LABEL_NOTE = mLocalizer.msg("labelNote", "<html><b>ATTENTION:</b> Changing above settings will require<br>a restart of TV-Browser to apply changes.</html>");
 
-    static final PluginInfo PLUGIN_INFO = new PluginInfo(TITLE, DESC, AUTHOR, new Version(0, 4), LICENSE);
+    static final PluginInfo PLUGIN_INFO = new PluginInfo(TITLE, DESC, AUTHOR, new Version(0, 5), LICENSE);
 
 }

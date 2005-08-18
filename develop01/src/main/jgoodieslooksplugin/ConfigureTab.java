@@ -1,4 +1,4 @@
-/* $Id: ConfigureTab.java,v 1.5 2005/08/18 06:03:57 emsker Exp $
+/* $Id: ConfigureTab.java,v 1.6 2005/08/18 07:26:19 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -6,18 +6,12 @@ package jgoodieslooksplugin;
 
 import java.awt.BorderLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.LookAndFeel;
-import javax.swing.SpringLayout;
+import javax.swing.*;
 import javax.swing.plaf.metal.MetalTheme;
 
 import util.ui.ImageUtilities;
+
+import devplugin.SettingsTab;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
@@ -25,13 +19,11 @@ import com.jgoodies.looks.plastic.PlasticTheme;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
-import devplugin.SettingsTab;
-
 /**
  * GUI component to configure plugin.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 class ConfigureTab extends JPanel implements SettingsTab {
 	
@@ -45,14 +37,32 @@ class ConfigureTab extends JPanel implements SettingsTab {
         config = defaultConfig;
     }
 
+    private static LookAndFeel[] getSupportedLookAndFeels() {
+        LookAndFeel[] candidate = new LookAndFeel[]{new WindowsLookAndFeel(),
+            new PlasticLookAndFeel(), new Plastic3DLookAndFeel(),
+            new PlasticXPLookAndFeel()};
+
+        int max = 0;
+        for (int i = 0; i < candidate.length; i++) {
+            if (candidate[i].isSupportedLookAndFeel()) {
+                max++;
+            }
+        }
+
+        LookAndFeel[] result = new LookAndFeel[max];
+        int current = 0;
+        for (int i = 0; i < candidate.length; i++) {
+            if (candidate[i].isSupportedLookAndFeel()) {
+                result[current] = candidate[i];
+                current++;
+            }
+        }
+        return result;
+    }
+
     private void initComponents() {
-        final LookAndFeel[] lafs;
-        final Object[] themes;
-
-        lafs = new LookAndFeel[] { new WindowsLookAndFeel(), new PlasticLookAndFeel(),
-                new Plastic3DLookAndFeel(), new PlasticXPLookAndFeel() };
-
-        themes = PlasticLookAndFeel.getInstalledThemes().toArray();
+        final LookAndFeel[] lafs = getSupportedLookAndFeels();
+        final Object[] themes = PlasticLookAndFeel.getInstalledThemes().toArray();
 
         looksEnabled = new JCheckBox(Resources.LABEL_ENABLE);
         looksEnabled.setSelected(config.isActive());
