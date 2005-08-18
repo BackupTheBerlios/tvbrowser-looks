@@ -1,0 +1,8 @@
+<br/>
+v0.05: Bietet nur noch die vom OS unterstützten L&F an.
+<br/>
+v0.04: Erlaubt die Drop-Shadow-Konfiguration, UI verschönert
+<br/>
+v0.03: funktioniert nun auch ohne looks-1.3.1.jar in $JAVA_HOME/jre/lib/ext (solltet Ihr dort auch entfernen).
+<br/>
+v0.02: fixes loosing of settings if plugin is not configured during tv-browser session.
