@@ -1,4 +1,4 @@
-/* $Id: JGoodiesLooksPlugin.java,v 1.5 2005/08/16 20:56:28 emsker Exp $
+/* $Id: JGoodiesLooksPlugin.java,v 1.6 2005/08/20 12:43:13 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -18,21 +18,21 @@ import devplugin.SettingsTab;
 
 /**
  * The plugin itself.
- *
- * @author  Martin Skopp
- * @version $Revision: 1.5 $
+ * 
+ * @author Martin Skopp
+ * @version $Revision: 1.6 $
  */
 public class JGoodiesLooksPlugin extends Plugin {
-	
-	private Configuration config;
-	private ConfigureTab tab;
 
-	public PluginInfo getInfo() {
+    private Configuration config;
+    private ConfigureTab tab;
+
+    public PluginInfo getInfo() {
         return Resources.PLUGIN_INFO;
-    } 
+    }
 
-	public SettingsTab getSettingsTab() {
-	    if (tab == null) {
+    public SettingsTab getSettingsTab() {
+        if (tab == null) {
             tab = new ConfigureTab(config);
         }
         return tab;
@@ -41,11 +41,11 @@ public class JGoodiesLooksPlugin extends Plugin {
     public Properties storeSettings() {
         return config.getProperties();
     }
-    
-	public void loadSettings(Properties props) {
-	    config = new Configuration(props);
-	    config.activateLaf();
-	}
+
+    public void loadSettings(Properties props) {
+        config = new Configuration(props);
+        config.activateLaf();
+    }
 
     public static void main(String[] args) {
         final Frame f = new Frame();
@@ -55,7 +55,7 @@ public class JGoodiesLooksPlugin extends Plugin {
         config.setLaf(new Plastic3DLookAndFeel());
         config.setTheme(new Silver());
         plugin.loadSettings(config.getProperties());
-        final SettingsTab s = plugin.getSettingsTab();  
+        final SettingsTab s = plugin.getSettingsTab();
         f.addWindowListener(new WindowAdapter() {
 
             public void windowClosing(WindowEvent e) {

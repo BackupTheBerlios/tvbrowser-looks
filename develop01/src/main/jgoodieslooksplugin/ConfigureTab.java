@@ -1,4 +1,4 @@
-/* $Id: ConfigureTab.java,v 1.6 2005/08/18 07:26:19 emsker Exp $
+/* $Id: ConfigureTab.java,v 1.7 2005/08/20 12:43:13 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -6,12 +6,18 @@ package jgoodieslooksplugin;
 
 import java.awt.BorderLayout;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.LookAndFeel;
+import javax.swing.SpringLayout;
 import javax.swing.plaf.metal.MetalTheme;
 
 import util.ui.ImageUtilities;
-
-import devplugin.SettingsTab;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
@@ -19,14 +25,16 @@ import com.jgoodies.looks.plastic.PlasticTheme;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
+import devplugin.SettingsTab;
+
 /**
  * GUI component to configure plugin.
- *
- * @author  Martin Skopp
- * @version $Revision: 1.6 $
+ * 
+ * @author Martin Skopp
+ * @version $Revision: 1.7 $
  */
 class ConfigureTab extends JPanel implements SettingsTab {
-	
+
     private final Configuration config;
     private JComboBox lafChoice, themeChoice;
     private JCheckBox looksEnabled, dropShadow;
@@ -62,7 +70,8 @@ class ConfigureTab extends JPanel implements SettingsTab {
 
     private void initComponents() {
         final LookAndFeel[] lafs = getSupportedLookAndFeels();
-        final Object[] themes = PlasticLookAndFeel.getInstalledThemes().toArray();
+        final Object[] themes = PlasticLookAndFeel.getInstalledThemes()
+            .toArray();
 
         looksEnabled = new JCheckBox(Resources.LABEL_ENABLE);
         looksEnabled.setSelected(config.isActive());
@@ -85,55 +94,52 @@ class ConfigureTab extends JPanel implements SettingsTab {
         themeLabel.setLabelFor(themeChoice);
         String selectedTheme = config.getTheme().getName();
         for (int i = 0; i < themes.length; i++) {
-            if (((MetalTheme)themes[i]).getName().equals(selectedTheme)) {
+            if (((MetalTheme) themes[i]).getName().equals(selectedTheme)) {
                 themeChoice.setSelectedIndex(i);
                 break;
             }
         }
 
-        
         dropShadow = new JCheckBox(Resources.LABEL_DROP_SHADOW);
         dropShadow.setSelected(config.isPopupDropShadowEnabled());
-        
+
         noteLabel = new JLabel(Resources.LABEL_NOTE);
     }
 
     public JPanel createSettingsPanel() {
         if (!initilized) {
             /*
-             * TV-Browser invokes (at least "1.1alpha3" did)
-             * this method multiple times.
-             * Initializing components again would
-             * reset selected values in UI components
+             * TV-Browser invokes (at least "1.1alpha3" did) this method
+             * multiple times. Initializing components again would reset
+             * selected values in UI components
              */
             initilized = true;
             initComponents();
-            
+
             JPanel choices = new JPanel();
             choices.setBorder(BorderFactory.createTitledBorder(Resources.NAME));
             choices.setLayout(new SpringLayout());
-            
+
             choices.add(new JLabel());
             choices.add(looksEnabled);
-            
+
             choices.add(lafLabel);
             choices.add(lafChoice);
-            
+
             choices.add(themeLabel);
             choices.add(themeChoice);
-            
+
             choices.add(new JLabel());
             choices.add(dropShadow);
-    
-            SpringUtilities.makeCompactGrid(choices,
-                                            4, 2,   //rows, cols
-                                            6, 6,   //initX, initY
-                                            6, 6);  //xPad, yPad
-            
+
+            SpringUtilities.makeCompactGrid(choices, 4, 2, // rows, cols
+                6, 6, // initX, initY
+                6, 6); // xPad, yPad
+
             setLayout(new BorderLayout());
-            
+
             add(choices, BorderLayout.NORTH);
-            
+
             JPanel note = new JPanel();
             note.setBorder(BorderFactory.createTitledBorder(""));
             note.add(noteLabel);
@@ -141,20 +147,20 @@ class ConfigureTab extends JPanel implements SettingsTab {
         }
         return this;
     }
-    
-	public void saveSettings() {
-	    config.setActive(looksEnabled.isSelected());
-	    config.setLaf((LookAndFeel) lafChoice.getSelectedItem());
-	    config.setTheme((PlasticTheme) themeChoice.getSelectedItem());
+
+    public void saveSettings() {
+        config.setActive(looksEnabled.isSelected());
+        config.setLaf((LookAndFeel) lafChoice.getSelectedItem());
+        config.setTheme((PlasticTheme) themeChoice.getSelectedItem());
         config.setPopupDropShadow(dropShadow.isSelected());
-	}
+    }
 
-	public Icon getIcon() {
-	    return new ImageIcon(ImageUtilities.createImageFromJar(
-	            "jgoodieslooksplugin/jgoodies-icon.gif", getClass()));
-	}
+    public Icon getIcon() {
+        return new ImageIcon(ImageUtilities.createImageFromJar(
+            "jgoodieslooksplugin/jgoodies-icon.gif", getClass()));
+    }
 
-	public String getTitle() {
-		return Resources.TITLE;
-	}
+    public String getTitle() {
+        return Resources.TITLE;
+    }
 }

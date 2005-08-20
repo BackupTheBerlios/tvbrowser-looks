@@ -1,4 +1,4 @@
-/* $Id: Resources.java,v 1.6 2005/08/18 07:26:19 emsker Exp $
+/* $Id: Resources.java,v 1.7 2005/08/20 12:43:13 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -12,12 +12,12 @@ import devplugin.Version;
  * Convenience class localizable strings.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 class Resources {
 
     private static final Localizer mLocalizer = Localizer
-            .getLocalizerFor(JGoodiesLooksPlugin.class);
+        .getLocalizerFor(JGoodiesLooksPlugin.class);
 
     static final String TITLE = mLocalizer.msg("pluginTitle", "JGoodies Looks Look&Feel");
     static final String NAME = mLocalizer.msg("pluginName", "JGoodies Looks Look&Feel Configuration");
@@ -31,6 +31,7 @@ class Resources {
     static final String LABEL_DROP_SHADOW = mLocalizer.msg("labelDropShadow", "Popup Menu Drop Shadow");
     static final String LABEL_NOTE = mLocalizer.msg("labelNote", "<html><b>ATTENTION:</b> Changing above settings will require<br>a restart of TV-Browser to apply changes.</html>");
 
-    static final PluginInfo PLUGIN_INFO = new PluginInfo(TITLE, DESC, AUTHOR, new Version(0, 5), LICENSE);
+    static final PluginInfo PLUGIN_INFO = new PluginInfo(TITLE, DESC, AUTHOR,
+        new Version(0, 5), LICENSE);
 
 }
