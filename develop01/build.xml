@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="JGoodiesLooksPlugin" basedir="." default="jar">
 
-    <property name="src.dir" value="src/main"/>
+	<property name="userproperties" value="${user.home}/ant-JGoodiesLooksPlugin.properties"/>
+	<property file="${userproperties}"/>
+	<fail message="Define property 'tvbrowser.dir' in ${userproperties}} - this should point to directory containing 'tvbrowser.jar' and 'plugins' directory." unless="tvbrowser.dir" />
+
+	<property name="src.dir" value="src/main"/>
     <property name="resources.dir" value="src/resource"/>
     <property name="classes.dir" value="build/classes"/>
     <property name="jar.dir" value="build/target"/>
+	<property name="looks.jar" value="lib/looks-1.3.1-patched.jar"/>
+	<property name="classpath" value="${looks.jar};${tvbrowser.dir}/tvbrowser.jar"/>
 
     <target name="clean" description="Delete all generated files">
         <delete dir="${classes.dir}" failonerror="false"/>
@@ -12,9 +18,9 @@
         <delete file="${ant.project.name}.jar"/>
     </target>
 
-    <target name="compile" description="Compiles the Task">
+    <target name="compile" description="Compiles the Task" depends="clean">
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" classpath="${classpath}" destdir="${classes.dir}"/>
     </target>
 
     <target name="jar" description="JARs the Task" depends="compile">
@@ -26,17 +32,16 @@
 
 
 		<mkdir dir="${jar.dir}" />
-    	<unjar src="lib/looks-1.3.1.jar" dest="${classes.dir}" />
+    	<unjar src="${looks.jar}" dest="${classes.dir}" />
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
     </target>
 	
 	<target name="deploy" depends="jar">
-		<!-- TODO SKOPP: das muss ich noch parametrisieren -->
-		<copy todir="C:/Programme/TV-Browser/plugins" file="${jar.dir}/${ant.project.name}.jar"/>
+		<copy todir="${tvbrowser.dir}/plugins" file="${jar.dir}/${ant.project.name}.jar"/>
 	</target>
 
 	<target name="test" depends="deploy">
-		<java fork="true" dir="C:/Programme/TV-Browser/" jar="tvbrowser.jar"></java>
+		<java fork="true" dir="${tvbrowser.dir}" jar="tvbrowser.jar"></java>
 	</target>
 
 </project>
