@@ -1,4 +1,4 @@
-/* $Id: ConfigureTab.java,v 1.8 2005/08/23 21:55:07 emsker Exp $
+/* $Id: ConfigureTab.java,v 1.9 2005/08/23 22:02:18 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -24,7 +24,7 @@ import devplugin.SettingsTab;
  * GUI component to configure plugin.
  * 
  * @author Martin Skopp
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 class ConfigureTab extends JPanel implements SettingsTab {
 
@@ -109,7 +109,7 @@ class ConfigureTab extends JPanel implements SettingsTab {
             builder.setDefaultDialogBorder();
             CellConstraints cc = new CellConstraints();
             
-            builder.addSeparator(Resources.NAME,    cc.xyw(1, 1, 3));
+            builder.addSeparator(Resources.SETTINGS,    cc.xyw(1, 1, 3));
             
             builder.add(looksEnabled,               cc.xy(3, 3));
             

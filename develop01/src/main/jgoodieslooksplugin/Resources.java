@@ -1,4 +1,4 @@
-/* $Id: Resources.java,v 1.9 2005/08/23 21:55:07 emsker Exp $
+/* $Id: Resources.java,v 1.10 2005/08/23 22:02:18 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -12,7 +12,7 @@ import devplugin.Version;
  * Convenience class localizable strings.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 class Resources {
 
@@ -20,7 +20,7 @@ class Resources {
         .getLocalizerFor(JGoodiesLooksPlugin.class);
 
     static final String TITLE = mLocalizer.msg("pluginTitle", "JGoodies Looks Look&Feel");
-    static final String NAME = mLocalizer.msg("pluginName", "JGoodies Looks Look&Feel Configuration");
+    static final String SETTINGS = mLocalizer.msg("settings", "Settings");
     static final String DESC = mLocalizer.msg("description", "Configures and activates JGoodies Looks L&Fs\nConfigures and activates JGoodies Looks L&Fs\nCopyright (c) 2005 JGoodies Karsten Lentzsch.\nAll Rights Reserved.");
     static final String AUTHOR = "Martin Skopp";
     static final String LICENSE = "GNU General Public License";
