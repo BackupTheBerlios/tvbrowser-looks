@@ -1,4 +1,4 @@
-/* $Id: Resources.java,v 1.8 2005/08/21 21:25:05 emsker Exp $
+/* $Id: Resources.java,v 1.9 2005/08/23 21:55:07 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -12,7 +12,7 @@ import devplugin.Version;
  * Convenience class localizable strings.
  *
  * @author  Martin Skopp
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 class Resources {
 
@@ -29,9 +29,8 @@ class Resources {
     static final String LABEL_LAF = mLocalizer.msg("labelLaf", "Look and Feel:");
     static final String LABEL_THEME = mLocalizer.msg("labelTheme", "Theme:");
     static final String LABEL_DROP_SHADOW = mLocalizer.msg("labelDropShadow", "Popup Menu Drop Shadow");
-    static final String LABEL_NOTE = mLocalizer.msg("labelNote", "<html><b>ATTENTION:</b> Changing above settings will require<br>a restart of TV-Browser to apply changes.</html>");
 
     static final PluginInfo PLUGIN_INFO = new PluginInfo(TITLE, DESC, AUTHOR,
-        new Version(0, 6), LICENSE);
+        new Version(0, 7), LICENSE);
 
 }

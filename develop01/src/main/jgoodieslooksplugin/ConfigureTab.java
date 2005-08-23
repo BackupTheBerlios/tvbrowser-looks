@@ -1,24 +1,17 @@
-/* $Id: ConfigureTab.java,v 1.7 2005/08/20 12:43:13 emsker Exp $
+/* $Id: ConfigureTab.java,v 1.8 2005/08/23 21:55:07 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
 package jgoodieslooksplugin;
 
-import java.awt.BorderLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.LookAndFeel;
-import javax.swing.SpringLayout;
+import javax.swing.*;
 import javax.swing.plaf.metal.MetalTheme;
 
 import util.ui.ImageUtilities;
 
+import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticTheme;
@@ -31,14 +24,14 @@ import devplugin.SettingsTab;
  * GUI component to configure plugin.
  * 
  * @author Martin Skopp
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 class ConfigureTab extends JPanel implements SettingsTab {
 
     private final Configuration config;
     private JComboBox lafChoice, themeChoice;
     private JCheckBox looksEnabled, dropShadow;
-    private JLabel lafLabel, themeLabel, noteLabel;
+    private JPanel settingsPanel;
     private boolean initilized = false;
 
     ConfigureTab(Configuration defaultConfig) {
@@ -78,8 +71,6 @@ class ConfigureTab extends JPanel implements SettingsTab {
 
         lafChoice = new JComboBox(lafs);
         lafChoice.setRenderer(new ComboBoxLafRenderer());
-        lafLabel = new JLabel(Resources.LABEL_LAF);
-        lafLabel.setLabelFor(lafChoice);
         String selectedLaf = config.getLaf().getName();
         for (int i = 0; i < lafs.length; i++) {
             if (lafs[i].getName().equals(selectedLaf)) {
@@ -90,8 +81,6 @@ class ConfigureTab extends JPanel implements SettingsTab {
 
         themeChoice = new JComboBox(themes);
         themeChoice.setRenderer(new ComboBoxThemeRenderer());
-        themeLabel = new JLabel(Resources.LABEL_THEME);
-        themeLabel.setLabelFor(themeChoice);
         String selectedTheme = config.getTheme().getName();
         for (int i = 0; i < themes.length; i++) {
             if (((MetalTheme) themes[i]).getName().equals(selectedTheme)) {
@@ -102,8 +91,6 @@ class ConfigureTab extends JPanel implements SettingsTab {
 
         dropShadow = new JCheckBox(Resources.LABEL_DROP_SHADOW);
         dropShadow.setSelected(config.isPopupDropShadowEnabled());
-
-        noteLabel = new JLabel(Resources.LABEL_NOTE);
     }
 
     public JPanel createSettingsPanel() {
@@ -116,36 +103,28 @@ class ConfigureTab extends JPanel implements SettingsTab {
             initilized = true;
             initComponents();
 
-            JPanel choices = new JPanel();
-            choices.setBorder(BorderFactory.createTitledBorder(Resources.NAME));
-            choices.setLayout(new SpringLayout());
-
-            choices.add(new JLabel());
-            choices.add(looksEnabled);
-
-            choices.add(lafLabel);
-            choices.add(lafChoice);
-
-            choices.add(themeLabel);
-            choices.add(themeChoice);
-
-            choices.add(new JLabel());
-            choices.add(dropShadow);
-
-            SpringUtilities.makeCompactGrid(choices, 4, 2, // rows, cols
-                6, 6, // initX, initY
-                6, 6); // xPad, yPad
-
-            setLayout(new BorderLayout());
-
-            add(choices, BorderLayout.NORTH);
-
-            JPanel note = new JPanel();
-            note.setBorder(BorderFactory.createTitledBorder(""));
-            note.add(noteLabel);
-            add(note, BorderLayout.SOUTH);
+            FormLayout layout = new FormLayout("pref, 4dlu, pref",
+                "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref");
+            PanelBuilder builder = new PanelBuilder(layout);
+            builder.setDefaultDialogBorder();
+            CellConstraints cc = new CellConstraints();
+            
+            builder.addSeparator(Resources.NAME,    cc.xyw(1, 1, 3));
+            
+            builder.add(looksEnabled,               cc.xy(3, 3));
+            
+            builder.addLabel(Resources.LABEL_LAF,   cc.xy(1, 5));
+            builder.add(lafChoice,                  cc.xy(3, 5));
+            
+            builder.addLabel(Resources.LABEL_THEME, cc.xy(1, 7));
+            builder.add(themeChoice,                cc.xy(3, 7));
+            
+            builder.add(dropShadow,                 cc.xy(3, 9));
+            
+            settingsPanel = builder.getPanel();
         }
-        return this;
+
+        return settingsPanel;
     }
 
     public void saveSettings() {
@@ -153,6 +132,13 @@ class ConfigureTab extends JPanel implements SettingsTab {
         config.setLaf((LookAndFeel) lafChoice.getSelectedItem());
         config.setTheme((PlasticTheme) themeChoice.getSelectedItem());
         config.setPopupDropShadow(dropShadow.isSelected());
+        config.activateLaf();
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                SwingUtilities.updateComponentTreeUI(createSettingsPanel());
+            }
+        });
     }
 
     public Icon getIcon() {

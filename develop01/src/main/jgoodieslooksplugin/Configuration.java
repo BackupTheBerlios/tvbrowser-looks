@@ -1,4 +1,4 @@
-/* $Id: Configuration.java,v 1.7 2005/08/20 12:43:13 emsker Exp $
+/* $Id: Configuration.java,v 1.8 2005/08/23 21:55:07 emsker Exp $
  *
  * Copyright under GNU General Public License (GPL)
  */
@@ -7,8 +7,11 @@ package jgoodieslooksplugin;
 import java.util.Properties;
 
 import javax.swing.LookAndFeel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import tvbrowser.ui.mainframe.MainFrame;
 
 import com.jgoodies.looks.LookUtils;
 import com.jgoodies.looks.Options;
@@ -20,7 +23,7 @@ import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
  * Convenience class for accessing and mutating plugins settins.
  * 
  * @author Martin Skopp
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 final class Configuration {
 
@@ -87,6 +90,7 @@ final class Configuration {
                  */
                 ClassLoader pluginLoader = getLaf().getClass().getClassLoader();
                 UIManager.getDefaults().put("ClassLoader", pluginLoader);
+                updateCompleteUI();
             } catch (UnsupportedLookAndFeelException e) {
                 e.printStackTrace();
             }
@@ -94,6 +98,7 @@ final class Configuration {
             if (otherLaf != null) {
                 try {
                     UIManager.setLookAndFeel(otherLaf);
+                    updateCompleteUI();
                 } catch (UnsupportedLookAndFeelException e) {
                     e.printStackTrace();
                 }
@@ -101,6 +106,15 @@ final class Configuration {
             otherLaf = null;
         }
 
+    }
+    
+    private void updateCompleteUI() {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                SwingUtilities.updateComponentTreeUI(MainFrame.getInstance());
+            }
+        });
     }
 
     void setActive(boolean activ) {
