@@ -301,11 +301,13 @@ public final class ShadowPopup extends Popup {
                 Graphics g = hShadowBg.createGraphics();
                 g.translate(-rect.x, -rect.y);
                 g.setClip(rect);
-                boolean doubleBuffered = layeredPane.isDoubleBuffered();
-                if(layeredPane instanceof JComponent) {
-                  ((JComponent)layeredPane).setDoubleBuffered(false);                
-                  layeredPane.paint(g);
-                  ((JComponent)layeredPane).setDoubleBuffered(doubleBuffered);
+                if (layeredPane instanceof JComponent) {
+                    boolean doubleBuffered = layeredPane.isDoubleBuffered();
+                    ((JComponent) layeredPane).setDoubleBuffered(false);
+                    layeredPane.paint(g);
+                    ((JComponent) layeredPane).setDoubleBuffered(doubleBuffered);
+                } else {
+                    layeredPane.paint(g);
                 }
                 g.dispose();
             }
@@ -373,7 +375,7 @@ public final class ShadowPopup extends Popup {
                 break;
             }
         }
-        return (Container) parent;
+        return parent;
     }
 
 }
