@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="JGoodiesLooksPlugin" basedir="." default="jar">
 
-	<property name="userproperties" value="${user.home}/ant-JGoodiesLooksPlugin.properties"/>
-	<property file="${userproperties}"/>
-	<fail message="Define property 'tvbrowser.dir' in ${userproperties}} - this should point to directory containing 'tvbrowser.jar' and 'plugins' directory." unless="tvbrowser.dir" />
+	<property file="build.properties"/>
+	<fail message="Define property 'tvbrowser.dir' in build.properties - this should point to directory containing 'tvbrowser.jar' and 'plugins' directory." unless="tvbrowser.dir" />
 
 	<property name="src.dir" value="src/main"/>
     <property name="resources.dir" value="src/resource"/>
