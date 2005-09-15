@@ -8,7 +8,7 @@
     <property name="resources.dir" value="src/resource"/>
     <property name="classes.dir" value="build/classes"/>
     <property name="jar.dir" value="build/target"/>
-	<property name="looks.jar" value="lib/looks-1.3.1-patched.jar"/>
+	<property name="looks.jar" value="lib/looks-1.3.2-snapshot-20050912.jar"/>
 	<property name="classpath" value="${looks.jar};${tvbrowser.dir}/tvbrowser.jar"/>
 
     <target name="clean" description="Delete all generated files">
