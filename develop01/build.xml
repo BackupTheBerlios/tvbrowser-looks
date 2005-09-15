@@ -17,7 +17,7 @@
         <delete file="${ant.project.name}.jar"/>
     </target>
 
-    <target name="compile" description="Compiles the Task" depends="clean">
+    <target name="compile" description="Compiles the Task">
         <mkdir dir="${classes.dir}"/>
         <javac srcdir="${src.dir}" classpath="${classpath}" destdir="${classes.dir}"/>
     </target>
